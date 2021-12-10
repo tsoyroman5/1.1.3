@@ -3,10 +3,7 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,12 +39,12 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        try (Connection connection = Util.getConnection(); Statement statement = connection.createStatement()) {
-            String SQL = "INSERT users(name, lastName, age)" +
-                    "VALUES ('" +
-                    name + "', '" +
-                    lastName + "', " +
-                    age + ");";
+        String SQL = "INSERT users(name, lastName, age)" +
+                "VALUES ('" +
+                name + "', '" +
+                lastName + "', " +
+                age + ");";
+        try (Connection connection = Util.getConnection(); PreparedStatement statement = connection.prepareStatement(SQL)) {
             statement.executeUpdate(SQL);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,9 +52,9 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void removeUserById(long id) {
-        try (Connection connection = Util.getConnection(); Statement statement = connection.createStatement()) {
-            String SQL = "DELETE FROM users\n" +
-                    "WHERE id=" + id;
+        String SQL = "DELETE FROM users\n" +
+                "WHERE id=" + id;
+        try (Connection connection = Util.getConnection(); PreparedStatement statement = connection.prepareStatement(SQL)) {
             statement.executeUpdate(SQL);
         } catch (SQLException e) {
             e.printStackTrace();
