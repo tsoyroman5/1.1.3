@@ -1,6 +1,5 @@
 package jm.task.core.jdbc.util;
 
-import com.mysql.cj.Session;
 import jm.task.core.jdbc.model.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
